@@ -21,6 +21,9 @@ button_text = button_font.render("QUIT",True,text_colour)
 screen.fill((100,100,100))
 
 game_over = False
+
+x,y = (0,0)
+
 while not game_over:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -29,7 +32,12 @@ while not game_over:
             x,y = event.pos
             if (button_rect[0] <= x <= button_rect[0] + button_rect[2] and button_rect[1] <= y <= button_rect[1] + button_rect[3]):
                 game_over = True #quit game if quit button is clicked
-    pygame.draw.rect(screen,button_colour,button_rect)
+        if event.type==pygame.MOUSEMOTION:
+            x,y = event.pos # if your mouse is moving, the location of it is the position checked for the event
+    if (button_rect[0] <= x <= button_rect[0] + button_rect[2] and button_rect[1] <= y <= button_rect[1] + button_rect[3]): # if you mouse over the button, it changes colout
+        pygame.draw.rect(screen, button_over_colour,button_rect)
+    else:
+        pygame.draw.rect(screen,button_colour,button_rect)
     # put da button in da centre
     screen.blit(button_text,(button_rect[0]+(button_width - button_text.get_width())/2,button_rect[1] + (button_height/2-button_text.get_height()/2)))
 
